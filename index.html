@@ -15,16 +15,16 @@
             --electric-cyan: #00f7ff;
             --vanta-dark: #050505;
             --comic-white: #f0f0f0;
-            --halftone-size: 20px; /* Controls size of background dots */
-            --font-main: 'Courier New', Courier, monospace; /* Coding feel */
-            --font-display: 'Impact', sans-serif; /* Comic book headers */
+            --halftone-size: 20px;
+            --font-main: 'Courier New', Courier, monospace;
+            --font-display: 'Impact', sans-serif;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            cursor: none; /* Custom cursor implementation */
+            cursor: none;
         }
 
         body {
@@ -36,11 +36,9 @@
         }
 
         /* ========================================
-        BACKGROUND AESTHETICS (The "Spider-Verse" Look)
+        BACKGROUND AESTHETICS
         ========================================
         */
-        
-        /* This creates the comic book "Ben-Day dots" or Halftone effect. */
         .halftone-bg {
             position: fixed;
             top: 0;
@@ -52,7 +50,7 @@
             background-image: radial-gradient(var(--spider-red) 1px, transparent 1px),
                               radial-gradient(var(--electric-cyan) 1px, transparent 1px);
             background-size: var(--halftone-size) var(--halftone-size);
-            background-position: 0 0, 10px 10px; /* Offset second layer for depth */
+            background-position: 0 0, 10px 10px;
             opacity: 0.15;
         }
 
@@ -176,7 +174,7 @@
             white-space: nowrap;
             overflow: hidden;
             animation: blink 0.75s step-end infinite;
-            max-width: 0; /* JS will handle width expansion */
+            max-width: 0;
         }
 
         @keyframes blink {
@@ -205,11 +203,10 @@
             transform: scale(0.95);
         }
 
-        /* Standard Image Styling */
         .avatar-img {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* Ensures image covers circle without stretching */
+            object-fit: cover;
             display: block;
         }
         
@@ -226,11 +223,11 @@
             padding: 30px;
             border-left: 5px solid var(--electric-cyan);
             backdrop-filter: blur(5px);
-            transform: skewX(-5deg); /* Comic panel style */
+            transform: skewX(-5deg);
         }
 
         .bio-card h3 {
-            transform: skewX(5deg); /* Un-skew text */
+            transform: skewX(5deg);
             margin-bottom: 10px;
             color: var(--spider-red);
         }
@@ -263,7 +260,7 @@
             margin-left: 20px;
         }
 
-        /* SKILLS (Web-Shooters) */
+        /* SKILLS */
         .skills-container {
             display: flex;
             flex-direction: column;
@@ -299,7 +296,7 @@
                 #cc0030 10px,
                 #cc0030 20px
             );
-            width: 0%; /* JS will animate this */
+            width: 0%;
             transition: width 1.5s cubic-bezier(0.1, 0.7, 0.1, 1);
         }
 
@@ -321,7 +318,6 @@
             overflow: hidden;
         }
 
-        /* Hover effect: Chromatic Aberration Shift */
         .project-card:hover {
             transform: translate(-5px, -5px);
             box-shadow: 5px 5px 0px var(--spider-red), 10px 10px 0px var(--electric-cyan);
@@ -403,23 +399,11 @@
             section { padding: 60px 0; }
         }
 
-        /* Floating particles (spider-sense/glitch vibes) */
-        .particle {
-            position: absolute;
-            width: 5px;
-            height: 5px;
-            background: var(--electric-cyan);
-            pointer-events: none;
-        }
-
     </style>
 </head>
 <body>
 
-    <!-- Background Layer -->
     <div class="halftone-bg"></div>
-    
-    <!-- Custom Cursor -->
     <div class="cursor" id="cursor"></div>
 
     <main class="container">
@@ -427,10 +411,6 @@
         <!-- HERO SECTION -->
         <section class="hero" id="home">
             <div class="avatar-container interactive-element" title="Triple-click for Secret Edit Mode">
-                <!-- 
-                    REPLACE THIS LINK IN THE 'src' BELOW WITH YOUR OWN IMAGE URL 
-                    (e.g. "./my-photo.jpg" or "https://imgur.com/...")
-                -->
                 <img id="hero-avatar" class="avatar-img" src="https://ui-avatars.com/api/?name=Pranay&background=ff003c&color=fff&size=512&bold=true" alt="Pranay">
             </div>
             <h1 class="glitch" data-text="PRANAY">PRANAY</h1>
@@ -471,45 +451,21 @@
         <section class="skills" id="skills">
             <h2 class="glitch" data-text="SUPERPOWERS" style="font-size: 3rem; margin-bottom: 40px;">SUPERPOWERS</h2>
             <div class="skills-container">
-                <!-- Python -->
                 <div class="skill-bar">
-                    <div class="skill-info">
-                        <span>PYTHON (Full Stack)</span>
-                        <span>95%</span>
-                    </div>
-                    <div class="progress-track">
-                        <div class="progress-fill python-fill" style="width: 95%"></div>
-                    </div>
+                    <div class="skill-info"><span>PYTHON (Full Stack)</span><span>95%</span></div>
+                    <div class="progress-track"><div class="progress-fill python-fill" style="width: 95%"></div></div>
                 </div>
-                <!-- JS -->
                 <div class="skill-bar">
-                    <div class="skill-info">
-                        <span>JAVASCRIPT (Vanilla)</span>
-                        <span>80%</span>
-                    </div>
-                    <div class="progress-track">
-                        <div class="progress-fill" style="width: 80%"></div>
-                    </div>
+                    <div class="skill-info"><span>JAVASCRIPT (Vanilla)</span><span>80%</span></div>
+                    <div class="progress-track"><div class="progress-fill" style="width: 80%"></div></div>
                 </div>
-                <!-- SQL -->
                 <div class="skill-bar">
-                    <div class="skill-info">
-                        <span>SQL / DATABASES</span>
-                        <span>85%</span>
-                    </div>
-                    <div class="progress-track">
-                        <div class="progress-fill python-fill" style="width: 85%"></div>
-                    </div>
+                    <div class="skill-info"><span>SQL / DATABASES</span><span>85%</span></div>
+                    <div class="progress-track"><div class="progress-fill python-fill" style="width: 85%"></div></div>
                 </div>
-                 <!-- Physics -->
                  <div class="skill-bar">
-                    <div class="skill-info">
-                        <span>APPLIED PHYSICS</span>
-                        <span>Loading...</span>
-                    </div>
-                    <div class="progress-track">
-                        <div class="progress-fill" style="width: 70%"></div>
-                    </div>
+                    <div class="skill-info"><span>APPLIED PHYSICS</span><span>Loading...</span></div>
+                    <div class="progress-track"><div class="progress-fill" style="width: 70%"></div></div>
                 </div>
             </div>
         </section>
@@ -518,30 +474,23 @@
         <section class="projects" id="projects">
             <h2 class="glitch" data-text="MISSIONS" style="font-size: 3rem; margin-bottom: 40px;">MISSIONS</h2>
             <div class="projects-grid">
-                
-                <!-- Project 1 -->
                 <div class="project-card interactive-element">
                     <span class="badge">PYTHON</span>
                     <span class="badge" style="background:var(--electric-cyan); color:black;">AI</span>
                     <h3>Neural Net Visualizer</h3>
                     <p>A tool to visualize gradient descent in real-time. Built to understand the math behind the code.</p>
                 </div>
-
-                <!-- Project 2 -->
                 <div class="project-card interactive-element">
                     <span class="badge">DJANGO</span>
                     <span class="badge" style="background:var(--electric-cyan); color:black;">API</span>
                     <h3>Exam Prep Tracker</h3>
                     <p>A bespoke tracker for JEE syllabus coverage using Django ORM and Chart.js integration.</p>
                 </div>
-
-                <!-- Project 3 -->
                 <div class="project-card interactive-element">
                     <span class="badge">AUTOMATION</span>
                     <h3>Script-Verse</h3>
                     <p>Collection of Python scripts to automate daily student tasks, from file sorting to reminder bots.</p>
                 </div>
-
             </div>
         </section>
 
@@ -550,11 +499,9 @@
             <h2 class="glitch" data-text="SIGNAL ME" style="font-size: 3rem; margin-bottom: 40px;">SIGNAL ME</h2>
             
             <!-- 
-            UPDATE: I have linked this directly to your Gmail. 
-            NOTE: The FIRST time you test this form, check your email to 'CONFIRM' it. 
+            UPDATED: This now points to your specific Formspree form ID.
             -->
-            <form class="contact-form" action="hhttps://formspree.io/f/xwpdrkve" method="POST">
-                <!-- 'name' attributes are REQUIRED for the email service to work -->
+            <form class="contact-form" action="https://formspree.io/f/xwpdrkve" method="POST">
                 <input type="text" name="name" placeholder="Your Name" required class="interactive-element">
                 <input type="email" name="email" placeholder="Your Email" required class="interactive-element">
                 <textarea name="message" rows="5" placeholder="Message Protocol..." required class="interactive-element"></textarea>
@@ -574,7 +521,6 @@
             cursor.style.top = e.clientY + 'px';
         });
 
-        // Add hover effect to cursor for interactive elements
         interactiveElements.forEach(el => {
             el.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
             el.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
@@ -588,18 +534,14 @@
         function typeWriter() {
             if (index < textToType.length) {
                 textElement.innerHTML += textToType.charAt(index);
-                // Dynamically update width to allow border-right to move
                 textElement.style.maxWidth = '100%'; 
                 index++;
-                setTimeout(typeWriter, 100); // Speed of typing
+                setTimeout(typeWriter, 100);
             }
         }
 
-        // Intersection Observer for Scroll Animations
-        const observerOptions = {
-            threshold: 0.1
-        };
-
+        // SCROLL ANIMATIONS
+        const observerOptions = { threshold: 0.1 };
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -609,7 +551,6 @@
             });
         }, observerOptions);
 
-        // Apply initial styles for animation
         document.querySelectorAll('section').forEach(section => {
             section.style.opacity = '0';
             section.style.transform = 'translateY(50px)';
@@ -617,8 +558,22 @@
             observer.observe(section);
         });
 
-        // Start typing on load
-        window.onload = typeWriter;
+        // ==========================================
+        // INITIALIZATION & IMAGE PERSISTENCE FIX
+        // We use 'load' event listener to ensure we don't overwrite startup logic
+        // ==========================================
+        window.addEventListener('load', () => {
+            // 1. Start Typing Effect
+            typeWriter();
+
+            // 2. Load Saved Avatar (The Fix)
+            const avatarImg = document.getElementById('hero-avatar');
+            const savedAvatar = localStorage.getItem('customAvatar');
+            if (savedAvatar) {
+                avatarImg.src = savedAvatar;
+                console.log("Custom Avatar Loaded from Storage");
+            }
+        });
 
         // ==========================================
         // SECRET ADMIN IMAGE CHANGER
@@ -628,32 +583,20 @@
         let clickCount = 0;
         let clickTimer;
 
-        // 1. Check if user already set a custom image previously
-        const savedAvatar = localStorage.getItem('customAvatar');
-        if (savedAvatar) {
-            avatarImg.src = savedAvatar;
-        }
-
-        // 2. The Secret Trigger
         avatarImg.addEventListener('click', (e) => {
             clickCount++;
-            
-            // Reset count if they stop clicking for 500ms
             clearTimeout(clickTimer);
-            clickTimer = setTimeout(() => {
-                clickCount = 0;
-            }, 500);
+            clickTimer = setTimeout(() => { clickCount = 0; }, 500);
 
-            // Trigger on 3rd click
             if (clickCount === 3) {
                 const password = prompt("PROTOCOL OVERRIDE INITIATED.\nENTER ADMIN PASSCODE:");
                 
-                if (password === "spiderverse") { // The Secret Password
+                if (password === "spiderverse") {
                     const newUrl = prompt("ACCESS GRANTED.\nENTER IMAGE URL:");
                     if (newUrl) {
                         avatarImg.src = newUrl;
-                        localStorage.setItem('customAvatar', newUrl); // Saves only for YOU
-                        alert("AVATAR UPDATED LOCALLY.");
+                        localStorage.setItem('customAvatar', newUrl); 
+                        alert("AVATAR UPDATED LOCALLY. REFRESH TO TEST.");
                     }
                 } else if (password !== null) {
                     alert("ACCESS DENIED.");
