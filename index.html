@@ -6,18 +6,19 @@
     <title>Pranay | Full Stack Python Developer</title>
     <style>
         /* ========================================
-        CSS VARIABLES & RESET
+        CSS VARIABLES & CONFIG
         ========================================
         */
         :root {
             --void-black: #0b0b0b;
             --spider-red: #ff003c;
             --electric-cyan: #00f7ff;
-            --vanta-dark: #050505;
+            --comic-yellow: #f9f936; 
             --comic-white: #f0f0f0;
             --halftone-size: 20px;
             --font-main: 'Courier New', Courier, monospace;
-            --font-display: 'Impact', sans-serif;
+            /* UPDATED FONT AS REQUESTED */
+            --font-display: 'Arial Black', 'Arial Bold', 'Helvetica Neue', sans-serif;
         }
 
         * {
@@ -36,22 +37,45 @@
         }
 
         /* ========================================
-        BACKGROUND AESTHETICS
+        CINEMATIC OVERLAYS & ANIMATIONS
         ========================================
         */
+        /* 1. Halftone Background */
         .halftone-bg {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -1;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: -2;
             background-image: radial-gradient(var(--spider-red) 1px, transparent 1px),
                               radial-gradient(var(--electric-cyan) 1px, transparent 1px);
             background-size: var(--halftone-size) var(--halftone-size);
             background-position: 0 0, 10px 10px;
-            opacity: 0.15;
+            opacity: 0.1;
+        }
+
+        /* 2. Scanline Effect (Monitor Vibe) */
+        .scanlines {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.1));
+            background-size: 100% 4px;
+            pointer-events: none; z-index: 9000;
+        }
+
+        /* 3. Floating Particles */
+        .particles {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: -1;
+        }
+        .particle {
+            position: absolute;
+            background: var(--electric-cyan);
+            width: 3px; height: 3px;
+            animation: floatUp 10s linear infinite;
+            opacity: 0.5;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            20% { opacity: 0.8; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
         }
 
         /* ========================================
@@ -59,71 +83,48 @@
         ========================================
         */
         .cursor {
-            width: 20px;
-            height: 20px;
+            width: 20px; height: 20px;
             border: 2px solid var(--electric-cyan);
             border-radius: 50%;
-            position: fixed;
-            pointer-events: none;
-            z-index: 9999;
+            position: fixed; pointer-events: none; z-index: 9999;
             transform: translate(-50%, -50%);
             transition: width 0.2s, height 0.2s, background-color 0.2s;
-            mix-blend-mode: difference;
+            mix-blend-mode: exclusion;
         }
-
         .cursor.hovered {
-            width: 50px;
-            height: 50px;
+            width: 50px; height: 50px;
             background-color: var(--spider-red);
             border-color: var(--spider-red);
-            opacity: 0.5;
+            opacity: 0.8;
+            mix-blend-mode: normal;
         }
 
         /* ========================================
-        GLITCH EFFECT TEXT
+        TYPOGRAPHY & GLITCH
         ========================================
         */
         .glitch {
             position: relative;
             font-family: var(--font-display);
             text-transform: uppercase;
-            font-weight: 900;
-            letter-spacing: 2px;
+            font-weight: 700; /* Adjusted thickness */
+            letter-spacing: 8px; /* Adjusted spacing */
         }
-
-        .glitch::before {
+        .glitch::before, .glitch::after {
             content: attr(data-text);
-            position: absolute;
-            left: -2px;
-            text-shadow: 1px 0 var(--spider-red);
-            top: 0;
-            color: white;
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
             background: var(--void-black);
-            overflow: hidden;
-            clip-path: inset(0 900px 0 0); 
+        }
+        .glitch::before {
+            left: -2px; text-shadow: 2px 0 var(--spider-red);
+            clip-path: inset(0 900px 0 0);
             animation: noise-anim-2 3s infinite linear alternate-reverse;
         }
-
         .glitch::after {
-            content: attr(data-text);
-            position: absolute;
-            left: 2px;
-            text-shadow: -1px 0 var(--electric-cyan);
-            top: 0;
-            color: white;
-            background: var(--void-black);
-            overflow: hidden;
-            clip-path: inset(0 900px 0 0); 
+            left: 2px; text-shadow: -2px 0 var(--electric-cyan);
+            clip-path: inset(0 900px 0 0);
             animation: noise-anim 2s infinite linear alternate-reverse;
-        }
-
-        @keyframes noise-anim {
-            0% { clip-path: inset(40% 0 61% 0); }
-            20% { clip-path: inset(92% 0 1% 0); }
-            40% { clip-path: inset(43% 0 1% 0); }
-            60% { clip-path: inset(25% 0 58% 0); }
-            80% { clip-path: inset(54% 0 7% 0); }
-            100% { clip-path: inset(58% 0 43% 0); }
         }
 
         @keyframes noise-anim-2 {
@@ -136,121 +137,88 @@
         }
 
         /* ========================================
-        LAYOUT & SECTIONS
+        LAYOUT & COMPONENTS
         ========================================
         */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        
         section {
-            padding: 100px 0;
-            min-height: 80vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
+            padding: 80px 0;
+            min-height: 90vh;
+            display: flex; flex-direction: column; justify-content: center;
+            opacity: 0; transform: translateY(30px); /* Initial state for animation */
+            transition: opacity 1s ease, transform 1s ease;
         }
+        section.visible { opacity: 1; transform: translateY(0); }
 
-        /* HERO */
-        .hero {
-            position: relative;
-            text-align: left;
-        }
-
-        .hero h1 {
-            font-size: 5rem;
-            line-height: 1;
-            margin-bottom: 20px;
-        }
-
-        .hero p {
-            font-size: 1.5rem;
-            color: var(--electric-cyan);
-            font-family: var(--font-main);
-            border-right: 2px solid var(--spider-red);
-            display: inline-block;
-            white-space: nowrap;
-            overflow: hidden;
-            animation: blink 0.75s step-end infinite;
-            max-width: 0;
-        }
-
-        @keyframes blink {
-            from, to { border-color: transparent; }
-            50% { border-color: var(--spider-red); }
-        }
-
-        /* AVATAR */
+        /* HERO & AVATAR */
+        .hero { text-align: left; }
+        .hero h1 { font-size: clamp(3rem, 8vw, 6rem); line-height: 1; margin-bottom: 20px; }
+        
         .avatar-container {
-            width: 180px;
-            height: 180px;
-            background: #222;
-            border-radius: 50%;
+            width: 200px; height: 200px;
+            background: #222; border-radius: 50%;
             margin-bottom: 30px;
             border: 4px solid var(--spider-red);
             box-shadow: 10px 10px 0px var(--electric-cyan);
             overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .avatar-container:hover { transform: scale(1.05) rotate(-3deg); }
+        .avatar-img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* RANDOM QUOTE BOX (Comic Style) */
+        .quote-wrapper {
+            margin-top: 25px;
+            max-width: 500px;
+            transform: rotate(-1deg);
+        }
+        .comic-box {
+            background-color: var(--comic-yellow);
+            color: #000;
+            border: 3px solid #000;
+            padding: 15px 20px;
             position: relative;
-            transition: transform 0.2s;
+            box-shadow: 5px 5px 0 rgba(0,0,0,0.5);
+            font-family: var(--font-display);
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            line-height: 1.4;
+        }
+        /* The little triangle for speech bubble */
+        .comic-box::before {
+            content: '';
+            position: absolute;
+            top: -15px; left: 40px;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-bottom: 15px solid #000;
+        }
+        .comic-box::after {
+            content: '';
+            position: absolute;
+            top: -9px; left: 43px;
+            border-left: 12px solid transparent;
+            border-right: 12px solid transparent;
+            border-bottom: 12px solid var(--comic-yellow);
         }
 
-        .avatar-container:active {
-            transform: scale(0.95);
-        }
-
-        .avatar-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-        
-        /* ABOUT */
-        .about-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 50px;
-            align-items: center;
-        }
-
+        /* ABOUT GRID */
+        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; }
         .bio-card {
             background: rgba(255, 255, 255, 0.05);
             padding: 30px;
             border-left: 5px solid var(--electric-cyan);
             backdrop-filter: blur(5px);
             transform: skewX(-5deg);
+            transition: 0.3s;
         }
-
-        .bio-card h3 {
-            transform: skewX(5deg);
-            margin-bottom: 10px;
-            color: var(--spider-red);
-        }
+        .bio-card:hover { border-left-color: var(--spider-red); box-shadow: -5px 5px 20px rgba(0, 247, 255, 0.1); }
+        .bio-card h3 { color: var(--spider-red); margin-bottom: 15px; font-family: var(--font-display); transform: skewX(5deg); }
+        .bio-card ul, .bio-card p { transform: skewX(5deg); list-style: none; }
+        .bio-card li::before { content: "> "; color: var(--electric-cyan); }
         
-        .bio-card p, .bio-card ul {
-            transform: skewX(5deg);
-        }
-
-        .bio-card ul {
-            list-style: none;
-            margin-top: 15px;
-        }
-
-        .bio-card li {
-            margin-bottom: 8px;
-            line-height: 1.4;
-        }
-        
-        .bio-card li::before {
-            content: "> ";
-            color: var(--electric-cyan);
-        }
-
         .meta-comment {
             display: block;
             font-size: 0.85em;
@@ -261,149 +229,75 @@
         }
 
         /* SKILLS */
-        .skills-container {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .skill-bar {
-            position: relative;
-            margin-bottom: 20px;
-        }
-
-        .skill-info {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-
+        .skill-bar { margin-bottom: 25px; }
+        .skill-info { display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 5px; }
         .progress-track {
-            height: 15px;
-            background: #222;
-            border: 1px solid #444;
-            transform: skewX(-15deg);
-            overflow: hidden;
+            height: 15px; background: #222; border: 1px solid #444;
+            transform: skewX(-15deg); overflow: hidden;
         }
-
         .progress-fill {
-            height: 100%;
-            background: repeating-linear-gradient(
-                45deg,
-                var(--spider-red),
-                var(--spider-red) 10px,
-                #cc0030 10px,
-                #cc0030 20px
-            );
-            width: 0%;
-            transition: width 1.5s cubic-bezier(0.1, 0.7, 0.1, 1);
+            height: 100%; width: 0%;
+            background: repeating-linear-gradient(45deg, var(--spider-red), var(--spider-red) 10px, #b3002d 10px, #b3002d 20px);
+            transition: width 1.5s ease-out;
         }
-
         .python-fill { background: var(--electric-cyan); }
 
-        /* PROJECTS */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-
+        /* PROJECT CARDS (3D Tilt) */
+        .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
         .project-card {
-            background: #111;
-            border: 1px solid #333;
-            padding: 20px;
-            position: relative;
-            transition: transform 0.3s ease;
-            overflow: hidden;
+            background: #111; border: 1px solid #333; padding: 25px;
+            position: relative; overflow: hidden;
+            transition: all 0.4s ease;
+            text-decoration: none; /* For links */
+            color: inherit;
+            display: block;
         }
-
         .project-card:hover {
-            transform: translate(-5px, -5px);
-            box-shadow: 5px 5px 0px var(--spider-red), 10px 10px 0px var(--electric-cyan);
-            border-color: var(--comic-white);
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 10px 10px 0px var(--spider-red), -5px -5px 0px var(--electric-cyan);
+            border-color: #fff;
         }
-
-        .project-card h3 {
-            font-family: var(--font-display);
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-        }
-
         .badge {
-            display: inline-block;
-            background: var(--spider-red);
-            color: white;
-            padding: 2px 8px;
-            font-size: 0.8rem;
-            margin-right: 5px;
-            transform: skewX(-10deg);
+            display: inline-block; background: var(--spider-red); color: white;
+            padding: 2px 8px; font-size: 0.8rem; margin-right: 5px;
+            transform: skewX(-10deg); font-family: var(--font-display);
         }
 
-        /* CONTACT */
-        .contact-form {
-            max-width: 600px;
-            width: 100%;
-        }
-
+        /* FORMS */
         input, textarea {
-            width: 100%;
-            padding: 15px;
-            margin-bottom: 20px;
-            background: transparent;
-            border: 2px solid #333;
-            color: var(--comic-white);
-            font-family: var(--font-main);
-            font-size: 1rem;
+            width: 100%; padding: 15px; margin-bottom: 20px;
+            background: rgba(255,255,255,0.05); border: 2px solid #333;
+            color: white; font-family: var(--font-main);
             transition: 0.3s;
         }
-
         input:focus, textarea:focus {
-            outline: none;
-            border-color: var(--electric-cyan);
-            box-shadow: 0 0 10px rgba(0, 247, 255, 0.2);
+            outline: none; border-color: var(--electric-cyan);
+            background: rgba(0, 247, 255, 0.05);
         }
-
         button {
-            background: var(--spider-red);
-            color: white;
-            border: none;
-            padding: 15px 40px;
-            font-family: var(--font-display);
-            font-size: 1.2rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            position: relative;
-            overflow: hidden;
+            background: var(--spider-red); color: white; border: none;
+            padding: 15px 40px; font-family: var(--font-display); font-size: 1.2rem;
+            letter-spacing: 2px; position: relative; overflow: hidden;
+            clip-path: polygon(10% 0, 100% 0, 100% 70%, 90% 100%, 0 100%, 0 30%);
+            transition: 0.3s;
         }
+        button:hover { background: #fff; color: var(--spider-red); transform: translateX(5px); }
 
-        button::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-            transition: 0.5s;
-        }
+        /* EASTER EGG: INVERT MODE */
+        .konami-mode { filter: invert(1) hue-rotate(180deg); }
 
-        button:hover::after {
-            left: 100%;
-        }
-
-        /* RESPONSIVE */
         @media (max-width: 768px) {
-            .hero h1 { font-size: 3rem; }
             .about-grid { grid-template-columns: 1fr; }
-            section { padding: 60px 0; }
+            .hero h1 { font-size: 3.5rem; }
         }
-
     </style>
 </head>
 <body>
 
+    <!-- Cinematic Overlays -->
     <div class="halftone-bg"></div>
+    <div class="scanlines"></div>
+    <div class="particles" id="particles"></div>
     <div class="cursor" id="cursor"></div>
 
     <main class="container">
@@ -411,18 +305,19 @@
         <!-- HERO SECTION -->
         <section class="hero" id="home">
             <div class="avatar-container interactive-element" title="Triple-click for Secret Edit Mode">
-                <!-- 
-                ==========================================================
-                PASTE YOUR IMAGE LINK HERE! 
-                1. Upload your photo to your GitHub Repo
-                2. Click the file > Click "Raw" > Copy that link
-                3. Paste it inside src="" below
-                ==========================================================
-                -->
+                <!-- PASTE YOUR GITHUB IMAGE LINK BELOW -->
                 <img id="hero-avatar" class="avatar-img" src="https://raw.githubusercontent.com/pranay54545/Portfolio/8d0173fbe3fc1a4fc194fa0217ac06bd2724c991/Profile.jpg" alt="Pranay">
             </div>
-            <h1 class="glitch" data-text="PRANAY">PRANAY</h1>
-            <p id="typing-text"></p>
+            
+            <!-- NEW: Random Comic Quote Box -->
+            <div class="quote-wrapper">
+                <div class="comic-box" id="random-quote">
+                    <!-- Javascript will insert text here -->
+                </div>
+            </div>
+
+            <h1 class="glitch" data-text="PRANAY" style="margin-top: 30px;">PRANAY</h1>
+            <p id="typing-text" style="color:var(--electric-cyan); border-right: 2px solid var(--spider-red); display: inline-block;"></p>
         </section>
 
         <!-- ABOUT ME -->
@@ -431,10 +326,11 @@
             <div class="about-grid">
                 <div class="bio-card">
                     <h3>Identity</h3>
-                    <p>I'm Pranay. Just a normal kid from India. Except I speak Python fluently.</p>
+                    <p>I'm Pranay. Just a normal Teenager from India. Except I speak Python fluently.</p>
                     <ul>
                         <li><strong>Class:</strong> 11 (JEE Aspirant)</li>
                         <li><strong>Focus:</strong> Physics, Math, Backend Logic</li>
+                        <!-- RESTORED: The specific inner monologue -->
                         <li>
                             <strong>Birthday:</strong> April 9th 
                             <span class="meta-comment">
@@ -448,8 +344,8 @@
                     <p style="font-size: 1.2rem; margin-bottom: 20px;">
                         Balancing the chaos of JEE preparation with the art of code. I build scalable backends and immersive frontends. My code is cleaner than my room.
                     </p>
-                    <p style="color: var(--spider-red); font-weight: bold;">
-                        // CURRENT OBJECTIVE: CRACK JEE && DEPLOY APPS
+                    <p style="color: var(--spider-red); font-weight: bold; font-family: var(--font-main);">
+                        # CURRENT OBJECTIVE: CRACK JEE && DEPLOY APPS
                     </p>
                 </div>
             </div>
@@ -485,19 +381,42 @@
                 <div class="project-card interactive-element">
                     <span class="badge">PYTHON</span>
                     <span class="badge" style="background:var(--electric-cyan); color:black;">AI</span>
-                    <h3>Neural Net Visualizer</h3>
+                    <h3> Snake-game (Keylogger)</h3>
                     <p>A tool to visualize gradient descent in real-time. Built to understand the math behind the code.</p>
                 </div>
                 <div class="project-card interactive-element">
-                    <span class="badge">DJANGO</span>
-                    <span class="badge" style="background:var(--electric-cyan); color:black;">API</span>
-                    <h3>Exam Prep Tracker</h3>
-                    <p>A bespoke tracker for JEE syllabus coverage using Django ORM and Chart.js integration.</p>
+                    <span class="badge">BE</span>
+                    <span class="badge" style="background:var(--electric-cyan); color:black;"> Patient </span>
+                    <h3> Coming soon </h3>
+                    <p> To get updates for new tools and knowledge about ethical acting follow X protocol(COMING SOON).</p>
                 </div>
-                <div class="project-card interactive-element">
-                    <span class="badge">AUTOMATION</span>
-                    <h3>Script-Verse</h3>
-                    <p>Collection of Python scripts to automate daily student tasks, from file sorting to reminder bots.</p>
+            
+            </div>
+        </section>
+
+        <!-- NEW: SOCIAL SPIDER-NETWORK SECTION -->
+        <section class="socials" id="socials">
+            <h2 class="glitch" data-text="SPIDER-NETWORK" style="font-size: 3rem; margin-bottom: 40px;">SPIDER-NETWORK</h2>
+            <div class="projects-grid">
+                <!-- Card 1 -->
+                <a href="https://instagram.com/pranay942009" target="_blank" class="project-card interactive-element" style="cursor: pointer;">
+                    <span class="badge" style="background: #E1306C; color: white;">INSTAGRAM</span>
+                    <h3 style="margin-top: 10px;">pranay942009</h3>
+                    <p style="color: #ccc; font-size: 0.9rem;">// MAIN TIMELINE FEED</p>
+                </a>
+                
+                <!-- Card 2 -->
+                <a href="https://instagram.com/pranay_pardeshi_" target="_blank" class="project-card interactive-element" style="cursor: pointer;">
+                    <span class="badge" style="background: #E1306C; color: white;">INSTAGRAM</span>
+                    <h3 style="margin-top: 10px;">@pranay_pardeshi_</h3>
+                    <p style="color: #ccc; font-size: 0.9rem;">// VARIANT PROFILE</p>
+                </a>
+
+                <!-- Card 3 -->
+                <div class="project-card interactive-element" style="opacity: 0.7; border-color: #444;">
+                    <span class="badge" style="background: #333; color: #888;">LOCKED</span>
+                    <h3 style="margin-top: 10px; color: #888;">COMING SOON</h3>
+                    <p style="color: #666; font-size: 0.9rem;">// LOADING NEW UNIVERSE...</p>
                 </div>
             </div>
         </section>
@@ -505,13 +424,9 @@
         <!-- CONTACT -->
         <section class="contact" id="contact">
             <h2 class="glitch" data-text="SIGNAL ME" style="font-size: 3rem; margin-bottom: 40px;">SIGNAL ME</h2>
-            
-            <!-- 
-            UPDATED: This now points to your specific Formspree form ID.
-            -->
             <form class="contact-form" action="https://formspree.io/f/xwpdrkve" method="POST">
-                <input type="text" name="name" placeholder="Your Name" required class="interactive-element">
-                <input type="email" name="email" placeholder="Your Email" required class="interactive-element">
+                <input type="text" name="name" placeholder="Name" required class="interactive-element">
+                <input type="email" name="email" placeholder="Email" required class="interactive-element">
                 <textarea name="message" rows="5" placeholder="Message Protocol..." required class="interactive-element"></textarea>
                 <button type="submit" class="interactive-element">TRANSMIT</button>
             </form>
@@ -520,99 +435,119 @@
     </main>
 
     <script>
-        // Custom Cursor Logic
-        const cursor = document.getElementById('cursor');
-        const interactiveElements = document.querySelectorAll('.interactive-element, a, button');
+        // 1. DYNAMIC QUOTE GENERATOR
+        const quotes = [
+            "Anyone can wear the mask. You can wear the mask. If you know Python.",
+            "With great power comes great refactoring capability.",
+            "It's a leap of faith. That's all it is, Miles. A leap of faith into production.",
+            "I see this spark in you. It’s amazing. It’s why I code.",
+            "My code isn't buggy, it just has multiverse variants.",
+            "Don't do it like me. Do it like you. But optimize your loops.",
+            "Okay, let's do this one last time. My name is Pranay...",
+            "When do I know I'm a senior dev? You won't. That's all it is, a leap of faith."
+        ];
+        
+        const quoteBox = document.getElementById('random-quote');
+        const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+        quoteBox.innerText = `"${randomQuote}"`;
 
+        // 2. PARTICLE SYSTEM GENERATOR
+        const particlesContainer = document.getElementById('particles');
+        for(let i=0; i<20; i++){
+            let p = document.createElement('div');
+            p.classList.add('particle');
+            p.style.left = Math.random() * 100 + 'vw';
+            p.style.animationDuration = (Math.random() * 5 + 5) + 's';
+            p.style.animationDelay = Math.random() * 5 + 's';
+            particlesContainer.appendChild(p);
+        }
+
+        // 3. CURSOR LOGIC
+        const cursor = document.getElementById('cursor');
+        const interactiveElements = document.querySelectorAll('.interactive-element, a, button, input, textarea');
         document.addEventListener('mousemove', (e) => {
             cursor.style.left = e.clientX + 'px';
             cursor.style.top = e.clientY + 'px';
         });
-
         interactiveElements.forEach(el => {
             el.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
             el.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
         });
 
-        // Typing Effect Logic
+        // 4. TYPING EFFECT
         const textElement = document.getElementById('typing-text');
         const textToType = "Hello, World. I code the multiverse.";
         let index = 0;
-
         function typeWriter() {
             if (index < textToType.length) {
                 textElement.innerHTML += textToType.charAt(index);
-                textElement.style.maxWidth = '100%'; 
                 index++;
                 setTimeout(typeWriter, 100);
             }
         }
 
-        // SCROLL ANIMATIONS
-        const observerOptions = { threshold: 0.1 };
+        // 5. SCROLL ANIMATION (Reveal on scroll)
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
+                    entry.target.classList.add('visible');
                 }
             });
-        }, observerOptions);
+        }, { threshold: 0.1 });
 
         document.querySelectorAll('section').forEach(section => {
-            section.style.opacity = '0';
-            section.style.transform = 'translateY(50px)';
-            section.style.transition = 'all 0.8s ease-out';
             observer.observe(section);
         });
 
-        // ==========================================
-        // INITIALIZATION & IMAGE PERSISTENCE FIX
-        // We use 'load' event listener to ensure we don't overwrite startup logic
-        // ==========================================
-        window.addEventListener('load', () => {
-            // 1. Start Typing Effect
-            typeWriter();
+        // 6. EASTER EGGS
+        // Console Egg
+        console.log("%c🕸️ SPIDER-SENSE TINGLING 🕸️", "color: #ff003c; font-size: 20px; font-weight: bold;");
+        console.log("You found the dev tools! Try the Konami Code: ↑ ↑ ↓ ↓ ← → ← → b a");
 
-            // 2. Load Saved Avatar (The Fix)
-            const avatarImg = document.getElementById('hero-avatar');
-            const savedAvatar = localStorage.getItem('customAvatar');
-            if (savedAvatar) {
-                avatarImg.src = savedAvatar;
-                console.log("Custom Avatar Loaded from Storage");
+        // Konami Code Egg (Up Up Down Down Left Right Left Right b a)
+        const secretCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+        let codePosition = 0;
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === secretCode[codePosition]) {
+                codePosition++;
+                if (codePosition === secretCode.length) {
+                    document.body.classList.toggle('konami-mode');
+                    alert("MULTIVERSE GLITCH DETECTED! (Colors Inverted)");
+                    codePosition = 0;
+                }
+            } else {
+                codePosition = 0;
             }
         });
 
-        // ==========================================
-        // SECRET ADMIN IMAGE CHANGER
-        // Logic: Triple-click avatar -> Password -> Enter URL -> Save to LocalStorage
-        // ==========================================
-        const avatarImg = document.getElementById('hero-avatar');
-        let clickCount = 0;
-        let clickTimer;
+        // 7. LOAD SAVED AVATAR & START
+        window.addEventListener('load', () => {
+            typeWriter();
+            const avatarImg = document.getElementById('hero-avatar');
+            const savedAvatar = localStorage.getItem('customAvatar');
+            if (savedAvatar) avatarImg.src = savedAvatar;
+        });
 
-        avatarImg.addEventListener('click', (e) => {
+        // 8. ADMIN AVATAR CLICK
+        const avatarImg = document.getElementById('hero-avatar');
+        let clickCount = 0, clickTimer;
+        avatarImg.addEventListener('click', () => {
             clickCount++;
             clearTimeout(clickTimer);
             clickTimer = setTimeout(() => { clickCount = 0; }, 500);
-
             if (clickCount === 3) {
-                const password = prompt("PROTOCOL OVERRIDE INITIATED.\nENTER ADMIN PASSCODE:");
-                
-                if (password === "spiderverse") {
-                    const newUrl = prompt("ACCESS GRANTED.\nENTER IMAGE URL:");
+                if (prompt("ADMIN PASSCODE:") === "spiderverse") {
+                    const newUrl = prompt("IMAGE URL:");
                     if (newUrl) {
                         avatarImg.src = newUrl;
-                        localStorage.setItem('customAvatar', newUrl); 
-                        alert("AVATAR UPDATED LOCALLY. REFRESH TO TEST.");
+                        localStorage.setItem('customAvatar', newUrl);
+                        alert("UPDATED.");
                     }
-                } else if (password !== null) {
-                    alert("ACCESS DENIED.");
                 }
                 clickCount = 0;
             }
         });
-
     </script>
 </body>
 </html>
